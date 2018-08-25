@@ -14,6 +14,7 @@ type Post struct {
 	Comments    []Comment `gorm:"ForeignKey:PostID"`
 	Votes       int       `gorm:"default:0"`
 	Created		time.Time `gorm:"default:current_timestamp"`
+	CommentQuantity	int	  `gorm:"default:0"`
 }
 
 type PostVote struct{

@@ -71,4 +71,24 @@ CREATE TRIGGER after_post_vote_delete
 		END IF;
 	END ;$$
 
+DROP TRIGGER IF EXISTS after_comment_add;$$
+CREATE TRIGGER after_comment_add
+	AFTER INSERT ON comments
+	FOR EACH ROW
+	BEGIN
+		UPDATE posts set comment_quantity = comment_quantity + 1 WHERE id = NEW.post_id;
+        IF NEW.father != 0 THEN
+			UPDATE comments set comment_quantity = comment_quantity + 1 WHERE id = NEW.father;
+        END IF;
+	END ;$$
 
+DROP TRIGGER IF EXISTS after_comment_delete;$$
+CREATE TRIGGER after_comment_delete
+	AFTER DELETE ON comments
+	FOR EACH ROW
+	BEGIN
+		UPDATE posts set comment_quantity = comment_quantity - 1 WHERE id = OLD.post_id;
+        IF OLD.father != 0 THEN
+			UPDATE comments set comment_quantity = comment_quantity - 1 WHERE id = OLD.father;
+        END IF;
+	END ;$$
