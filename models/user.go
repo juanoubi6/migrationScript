@@ -28,7 +28,7 @@ type EmailConfirmation struct {
 	ID     uint `gorm:"primary_key" json:"-"`
 	Email  string
 	UserID uint
-	Code   string
+	Code   string `gorm:"unique_index:idx_unique_code" json:"ID"`
 }
 
 type PhoneConfirmation struct {

@@ -168,7 +168,7 @@ func createMockData() error {
 		LastName: "Oubina",
 		Password: defaultPassword,
 		Email:    "juan.manuel.oubina@gmail.com",
-		Phone:    "+541151525568",
+		Phone:    "",
 		RoleID:   1,
 	}
 	user1.ID = 1
