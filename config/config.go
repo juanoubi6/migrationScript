@@ -3,8 +3,8 @@ package config
 import "os"
 
 type Config struct {
-	ENV        string
-	PORT       string
+	ENV  string
+	PORT string
 
 	DB_TYPE     string
 	DB_USERNAME string
@@ -12,7 +12,6 @@ type Config struct {
 	DB_HOST     string
 	DB_PORT     string
 	DB_NAME     string
-
 }
 
 var instance *Config
@@ -27,8 +26,8 @@ func GetConfig() *Config {
 
 func newConfig() Config {
 	return Config{
-		ENV:        GetEnv("ENV", "develop"),
-		PORT:       GetEnv("PORT", "5003"),
+		ENV:  GetEnv("ENV", "develop"),
+		PORT: GetEnv("PORT", "5003"),
 
 		DB_TYPE:     GetEnv("DB_TYPE", "mysql"),
 		DB_USERNAME: GetEnv("DB_USERNAME", "root"),

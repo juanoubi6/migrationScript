@@ -26,6 +26,3 @@ func ConnectToDatabase() {
 func GetDatabase() *gorm.DB {
 	return db
 }
-
-
-

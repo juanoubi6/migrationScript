@@ -5,12 +5,12 @@ import (
 	"migrationScript/migrations"
 )
 
-func main(){
+func main() {
 	common.ConnectToDatabase()
 	err := migrations.Run()
-	if err != nil{
+	if err != nil {
 		println("Error: " + err.Error())
-	}else{
+	} else {
 		println("Ok")
 	}
 }

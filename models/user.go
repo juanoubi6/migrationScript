@@ -3,8 +3,8 @@ package models
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/rs/xid"
-	"strings"
 	"migrationScript/common"
+	"strings"
 )
 
 type User struct {

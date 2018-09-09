@@ -2,13 +2,13 @@ package migrations
 
 import (
 	"github.com/rs/xid"
-	"migrationScript/common"
-	"migrationScript/models"
 	"golang.org/x/crypto/bcrypt"
 	"io/ioutil"
+	"migrationScript/common"
+	"migrationScript/models"
 )
 
-func Run() error{
+func Run() error {
 	var modelsToMigrate []interface{}
 
 	//TheAmazingCodeExample
@@ -26,6 +26,10 @@ func Run() error{
 	modelsToMigrate = append(modelsToMigrate, models.PostVote{})
 	modelsToMigrate = append(modelsToMigrate, models.Comment{})
 	modelsToMigrate = append(modelsToMigrate, models.CommentVote{})
+
+	//TheAmazingNotificator
+	modelsToMigrate = append(modelsToMigrate, models.Notification{})
+	modelsToMigrate = append(modelsToMigrate, models.NotificationType{})
 
 	r := common.GetDatabase()
 
@@ -49,7 +53,7 @@ func Run() error{
 	}
 
 	err = createTriggers()
-	if r.Error != nil{
+	if r.Error != nil {
 		return r.Error
 	}
 
@@ -59,6 +63,31 @@ func Run() error{
 func createMockData() error {
 	println("Start migrations")
 	var err error
+
+	notiType1 := models.NotificationType{
+		ID:   1,
+		Type: "Post vote",
+	}
+	notiType2 := models.NotificationType{
+		ID:   2,
+		Type: "Post comment",
+	}
+	notiType3 := models.NotificationType{
+		ID:   3,
+		Type: "Comment comment",
+	}
+	err = common.GetDatabase().Create(&notiType1).Error
+	if err != nil {
+		return err
+	}
+	err = common.GetDatabase().Create(&notiType2).Error
+	if err != nil {
+		return err
+	}
+	err = common.GetDatabase().Create(&notiType3).Error
+	if err != nil {
+		return err
+	}
 
 	//Permissions
 	permission1 := models.Permission{
@@ -234,15 +263,15 @@ func createMockData() error {
 
 }
 
-func createTriggers() error{
+func createTriggers() error {
 
-	data,err := ioutil.ReadFile("triggers.sql")
-	if err != nil{
+	data, err := ioutil.ReadFile("triggers.sql")
+	if err != nil {
 		return err
 	}
 
 	err = common.GetDatabase().Exec(string(data)).Error
-	if err != nil{
+	if err != nil {
 		return err
 	}
 
